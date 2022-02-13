@@ -16,10 +16,21 @@ function updateTotalField(totalFieldId, amount) {
 
 }
 ////////////////////////
-function updateBlance(amount, isAdd) {
+
+function getCurrentBlance() {
     const blanceTotal = document.getElementById('blance-total');
     const blanceTotalText = blanceTotal.innerText;
     const previesBlanceTotal = parseFloat(blanceTotalText);
+    return previesBlanceTotal;
+}
+////////////////////////
+function updateBlance(amount, isAdd) {
+    const blanceTotal = document.getElementById('blance-total');
+    // const blanceTotalText = blanceTotal.innerText;
+    // const previesBlanceTotal = parseFloat(blanceTotalText);
+
+    previesBlanceTotal = getCurrentBlance();
+
     if (isAdd == true) {
         blanceTotal.innerText = previesBlanceTotal + amount;
     }
@@ -31,11 +42,12 @@ function updateBlance(amount, isAdd) {
 document.getElementById('Deposit-button').addEventListener('click', function () {
     /// Deposit total
     const depositAmount = getInputValue('Deposit-input');
+    if (depositAmount > 0) {
+        updateTotalField('Deposit-total', depositAmount);
+        //update blance
+        updateBlance(depositAmount, true);
+    }
 
-    updateTotalField('Deposit-total', depositAmount);
-
-    //update blance
-    updateBlance(depositAmount, true);
 
 })
 
@@ -43,10 +55,15 @@ document.getElementById('Deposit-button').addEventListener('click', function () 
 
 document.getElementById('Withdraw-button').addEventListener('click', function () {
     const withdrawAmount = getInputValue('Withdraw-input')
+    const carrentBlance = getCurrentBlance();
+    if (withdrawAmount > 0 && withdrawAmount <= carrentBlance) {
+        updateTotalField('withdraw-total', withdrawAmount)
+        //update blance after withdraw
+        updateBlance(withdrawAmount, false)
 
-    updateTotalField('withdraw-total', withdrawAmount)
-
-    //update blance after withdraw
-    updateBlance(withdrawAmount, false)
+    }
+    if (withdrawAmount > carrentBlance) {
+        console.log("You don't have that mosh money")
+    }
 
 })
