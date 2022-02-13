@@ -7,40 +7,36 @@ function getInputValue(inputId) {
     return amountValue;
 }
 
+function updateTotalField(totalFieldId, amount) {
+    const totalElement = document.getElementById(totalFieldId);
+    const totalText = totalElement.innerText;
+    const prevesisTotal = parseFloat(totalText);
+
+    totalElement.innerText = prevesisTotal + amount;
+
+}
+
 document.getElementById('Deposit-button').addEventListener('click', function () {
 
-    const prevesDepositAmount = getInputValue('Deposit-input');
+    const depositAmount = getInputValue('Deposit-input');
 
-
-
-    const depositTotal = document.getElementById('Deposit-total');
-    const depositTotalText = depositTotal.innerText;
-    const prevesisDepositTotal = parseFloat(depositTotalText);
-    depositTotal.innerText = prevesisDepositTotal + prevesDepositAmount;
-
+    updateTotalField('Deposit-total', depositAmount);
 
     //update blance
 
     const blanceTotal = document.getElementById('blance-total');
     const blanceTotalText = blanceTotal.innerText;
     const previesBlanceTotal = parseFloat(blanceTotalText);
-    blanceTotal.innerText = previesBlanceTotal + prevesDepositAmount;
-
-
+    blanceTotal.innerText = previesBlanceTotal + depositAmount;
 
 })
 
 //Withdrow  
 
 document.getElementById('Withdraw-button').addEventListener('click', function () {
-
     const withdrawAmount = getInputValue('Withdraw-input')
 
-    const withdrawTotal = document.getElementById('withdraw-total');
-    const withdrawTotalText = withdrawTotal.innerText;
-    const previesWithdrawTotal = parseFloat(withdrawTotalText);
-
-    withdrawTotal.innerText = withdrawAmount + previesWithdrawTotal;
+    updateTotalField('withdraw-total', withdrawAmount)
 
 
     //update blance after withdraw
@@ -48,8 +44,6 @@ document.getElementById('Withdraw-button').addEventListener('click', function ()
     const blanceTotalText = blanceTotal.innerText;
     const previesBlanceTotal = parseFloat(blanceTotalText);
     blanceTotal.innerText = previesBlanceTotal - withdrawAmount;
-
-
 
 
 })
