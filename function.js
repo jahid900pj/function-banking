@@ -1,4 +1,4 @@
-
+//////////////////////
 function getInputValue(inputId) {
     const inputField = document.getElementById(inputId);
     const inputAmountText = inputField.value;
@@ -6,7 +6,7 @@ function getInputValue(inputId) {
     inputField.value = '';
     return amountValue;
 }
-
+//////////////////////
 function updateTotalField(totalFieldId, amount) {
     const totalElement = document.getElementById(totalFieldId);
     const totalText = totalElement.innerText;
@@ -15,35 +15,38 @@ function updateTotalField(totalFieldId, amount) {
     totalElement.innerText = prevesisTotal + amount;
 
 }
-
+////////////////////////
+function updateBlance(amount, isAdd) {
+    const blanceTotal = document.getElementById('blance-total');
+    const blanceTotalText = blanceTotal.innerText;
+    const previesBlanceTotal = parseFloat(blanceTotalText);
+    if (isAdd == true) {
+        blanceTotal.innerText = previesBlanceTotal + amount;
+    }
+    else {
+        blanceTotal.innerText = previesBlanceTotal - amount;
+    }
+}
+/////////////////////////
 document.getElementById('Deposit-button').addEventListener('click', function () {
-
+    /// Deposit total
     const depositAmount = getInputValue('Deposit-input');
 
     updateTotalField('Deposit-total', depositAmount);
 
     //update blance
-
-    const blanceTotal = document.getElementById('blance-total');
-    const blanceTotalText = blanceTotal.innerText;
-    const previesBlanceTotal = parseFloat(blanceTotalText);
-    blanceTotal.innerText = previesBlanceTotal + depositAmount;
+    updateBlance(depositAmount, true);
 
 })
 
-//Withdrow  
+/////////////////////// Withdrow  
 
 document.getElementById('Withdraw-button').addEventListener('click', function () {
     const withdrawAmount = getInputValue('Withdraw-input')
 
     updateTotalField('withdraw-total', withdrawAmount)
 
-
     //update blance after withdraw
-    const blanceTotal = document.getElementById('blance-total');
-    const blanceTotalText = blanceTotal.innerText;
-    const previesBlanceTotal = parseFloat(blanceTotalText);
-    blanceTotal.innerText = previesBlanceTotal - withdrawAmount;
-
+    updateBlance(withdrawAmount, false)
 
 })
